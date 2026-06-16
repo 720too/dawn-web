@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAWN — 夜の約束を、朝の力に。</title>
+<meta name="description" content="DAWNは、夜の自分が朝の自分に送る約束。ホライゾンインターフェース、ランダム起床チャレンジ、タイムカプセルで、明日の朝を変える無料アラームアプリ。">
+<link rel="icon" type="image/svg+xml" href="assets/icon-primary.svg">
+<link rel="apple-touch-icon" href="assets/icon-primary.svg">
+<meta property="og:title" content="DAWN — 夜の約束を、朝の力に。">
+<meta property="og:description" content="夜の自分が朝の自分に送る約束。タイムカプセル＋起床チャレンジで、明日の朝を変える。">
+<meta property="og:image" content="assets/feature-graphic.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a0e1a;
+    --navy2:#1a2040;
+    --coral:#ff7b4f;
+    --amber:#ffb347;
+    --gold:#ffd700;
+    --text:#e8eaf6;
+    --muted:#8892b0;
+    --grad-warm:linear-gradient(120deg,#ffd700 0%,#ffb347 38%,#ff7b4f 100%);
+    --grad-sky:linear-gradient(180deg,#0a0e1a 0%,#131932 34%,#1a2040 56%,#5a3a5a 76%,#ff7b4f 90%,#ffb347 100%);
+    --maxw:1180px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+    background:var(--navy);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{line-height:1.25;font-weight:700;letter-spacing:.01em}
+  .serif{font-family:'Playfair Display',serif}
+  a{color:inherit;text-decoration:none}
+  section{position:relative}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .grad-text{
+    background:var(--grad-warm);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+  }
+  .eyebrow{
+    font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:18px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+    transition:background .4s ease,backdrop-filter .4s ease,padding .4s ease,border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  nav.scrolled{
+    background:rgba(10,14,26,.78);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(136,146,176,.14);
+    padding:12px 24px;
+  }
+  .nav-brand{display:flex;align-items:center;gap:11px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem}
+  .nav-links{display:flex;align-items:center;gap:34px}
+  .nav-links a{color:var(--muted);font-weight:500;font-size:.95rem;transition:color .25s}
+  .nav-links a:hover{color:var(--text)}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    border:none;cursor:pointer;font-family:inherit;font-weight:600;
+    border-radius:999px;transition:transform .25s ease,box-shadow .25s ease,opacity .25s;
+  }
+  .btn-cta{
+    background:var(--grad-warm);color:#1a1206;
+    padding:11px 22px;font-size:.92rem;
+    box-shadow:0 6px 22px rgba(255,123,79,.4);
+  }
+  .btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,123,79,.55)}
+  .btn-demo{
+    background:rgba(255,255,255,.08);color:var(--text);
+    border:1px solid rgba(255,255,255,.18);
+    padding:11px 22px;font-size:.92rem;
+  }
+  .btn-demo:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
+  .nav-toggle{display:none}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;
+    padding:120px 0 80px;overflow:hidden;
+    background:var(--grad-sky);background-size:100% 220%;
+    animation:skyShift 16s ease-in-out infinite alternate;
+  }
+  @keyframes skyShift{0%{background-position:0 0}100%{background-position:0 40%}}
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:38%;
+    background:radial-gradient(120% 100% at 50% 130%,rgba(255,215,0,.55),rgba(255,123,79,.25) 40%,transparent 70%);
+    pointer-events:none;
+  }
+  .stars{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,4s) ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:var(--o,.3);transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+  .hero .wrap{position:relative;z-index:5;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .hero-logo{font-size:clamp(4.5rem,12vw,8rem);font-weight:800;line-height:1;letter-spacing:.04em;
+    background:linear-gradient(110deg,#fff6d8 0%,#ffd700 30%,#ffb347 55%,#ff7b4f 80%,#fff6d8 100%);
+    background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+    animation:shimmer 6s linear infinite;margin-bottom:8px;
+  }
+  @keyframes shimmer{to{background-position:220% center}}
+  .hero-tag{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.3rem,3.2vw,1.9rem);color:#fff;margin-bottom:18px;font-weight:500}
+  .hero-sub{color:rgba(232,234,246,.82);font-size:1.05rem;max-width:460px;margin-bottom:30px}
+  .badge-free{
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:26px;
+    background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.4);
+    color:var(--gold);font-weight:700;font-size:.85rem;letter-spacing:.05em;
+    padding:7px 16px;border-radius:999px;
+  }
+  .badge-free::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+  .store-row{display:flex;gap:14px;flex-wrap:wrap}
+  .store-badge{
+    display:inline-flex;align-items:center;gap:11px;
+    background:#05070f;border:1px solid rgba(136,146,176,.3);
+    padding:10px 18px;border-radius:14px;transition:transform .25s,border-color .25s,box-shadow .25s;
+  }
+  .store-badge:hover{transform:translateY(-3px);border-color:rgba(255,179,71,.5);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+  .store-badge svg{width:26px;height:26px;flex:none}
+  .store-badge .sb-small{font-size:.62rem;color:var(--muted);display:block;letter-spacing:.04em;line-height:1.3}
+  .store-badge .sb-big{font-size:1.1rem;font-weight:700;color:#fff;line-height:1.1}
+
+  /* ---------- PHONE MOCKUP ---------- */
+  .phone-stage{display:flex;justify-content:center;align-items:center;perspective:1400px}
+  .phone{
+    position:relative;width:300px;height:620px;border-radius:46px;
+    background:linear-gradient(155deg,#2a3050,#11152a);
+    padding:13px;box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.05),inset 0 0 0 1px rgba(255,255,255,.08);
+    animation:float 7s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0) rotateZ(-1deg)}50%{transform:translateY(-22px) rotateZ(1deg)}}
+  .phone-screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#0a0e1a}
+  .phone-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:96px;height:24px;background:#05070f;border-radius:14px;z-index:6}
+  .screen-sky{position:absolute;inset:0;background:linear-gradient(180deg,#0a0e1a 0%,#131932 28%,#1a2040 50%,#5a3a5a 70%,#ff7b4f 88%,#ffb347 100%)}
+  .screen-time{position:absolute;top:64px;left:0;right:0;text-align:center;z-index:4}
+  .screen-time .t{font-size:3.6rem;font-weight:300;letter-spacing:.02em;color:#fff;line-height:1}
+  .screen-time .lbl{font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.18em;text-transform:uppercase;margin-top:8px}
+  .screen-alarm{position:absolute;top:175px;left:0;right:0;text-align:center;z-index:4}
+  .screen-alarm .next{font-family:'Playfair Display',serif;font-size:1.05rem;color:#ffe7b0;font-style:italic}
+  .screen-alarm .next b{font-style:normal;font-weight:700}
+  .screen-svg{position:absolute;bottom:0;left:0;width:100%;z-index:2}
+  .screen-sun-glow{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);width:230px;height:230px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,215,0,.9),rgba(255,179,71,.4) 40%,transparent 70%);
+    animation:sunpulse 5s ease-in-out infinite;z-index:1}
+  @keyframes sunpulse{0%,100%{opacity:.75;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.08)}}
+  .screen-promise{position:absolute;bottom:42px;left:24px;right:24px;z-index:5;text-align:center;
+    background:rgba(10,14,26,.42);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;padding:14px 16px}
+  .screen-promise .pl{font-size:.62rem;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
+  .screen-promise .pt{font-family:'Playfair Display',serif;font-style:italic;font-size:.92rem;color:#fff}
+
+  /* ---------- generic section ---------- */
+  .sect{padding:110px 0}
+  .sect-head{text-align:center;max-width:680px;margin:0 auto 60px}
+  .sect-head h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px}
+  .sect-head p{color:var(--muted);font-size:1.08rem}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- PROBLEM ---------- */
+  .problem{background:linear-gradient(180deg,#0a0e1a,#0c1124)}
+  .prob-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .prob-card{
+    background:linear-gradient(160deg,rgba(26,32,64,.6),rgba(10,14,26,.3));
+    border:1px solid rgba(136,146,176,.16);border-radius:20px;padding:30px 24px;
+    transition:transform .35s,border-color .35s;
+  }
+  .prob-card:hover{transform:translateY(-6px);border-color:rgba(255,123,79,.35)}
+  .prob-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,123,79,.12);margin-bottom:18px}
+  .prob-ic svg{width:28px;height:28px;stroke:var(--coral)}
+  .prob-card h3{font-size:1.12rem;margin-bottom:8px;color:#fff}
+  .prob-card p{color:var(--muted);font-size:.92rem}
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philo{padding:130px 0;text-align:center;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 120%,rgba(255,123,79,.16),transparent 55%),#0a0e1a}
+  .philo .big{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,4rem);font-weight:700;line-height:1.3;max-width:880px;margin:0 auto 26px}
+  .philo .from-to{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.4rem,4vw,2.4rem);margin:34px 0}
+  .philo p{color:var(--muted);max-width:560px;margin:0 auto;font-size:1.05rem}
+
+  /* ---------- FEATURES ---------- */
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:130px}
+  .feat:last-child{margin-bottom:0}
+  .feat.flip .feat-text{order:2}
+  .feat-num{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--amber);margin-bottom:14px;letter-spacing:.04em}
+  .feat-text h3{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:16px;color:#fff}
+  .feat-text p{color:var(--muted);font-size:1.06rem;max-width:440px}
+  .feat-visual{display:flex;justify-content:center;align-items:center}
+  .vcard{
+    width:100%;max-width:380px;aspect-ratio:1/1;border-radius:30px;position:relative;overflow:hidden;
+    border:1px solid rgba(136,146,176,.18);box-shadow:0 30px 70px rgba(0,0,0,.45);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .v-horizon{background:linear-gradient(180deg,#0a0e1a,#131932 30%,#1a2040 52%,#5a3a5a 72%,#ff7b4f 90%,#ffb347 100%);background-size:100% 200%;animation:skyShift 12s ease-in-out infinite alternate}
+  .v-horizon .vsun{position:absolute;bottom:34%;width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle,#fff6d8,#ffd700 40%,#ffb347 75%);
+    box-shadow:0 0 70px 30px rgba(255,215,0,.45);animation:sunpulse 5s ease-in-out infinite}
+  .v-gesture{background:radial-gradient(circle at 50% 50%,#1a2040,#0a0e1a)}
+  .ring{width:200px;height:200px;border-radius:50%;border:2px solid rgba(255,179,71,.35);display:flex;align-items:center;justify-content:center;position:relative;
+    box-shadow:0 0 60px rgba(255,123,79,.3),inset 0 0 40px rgba(255,123,79,.12);animation:ringpulse 3s ease-in-out infinite}
+  @keyframes ringpulse{0%,100%{box-shadow:0 0 50px rgba(255,123,79,.25),inset 0 0 30px rgba(255,123,79,.1)}50%{box-shadow:0 0 80px rgba(255,123,79,.5),inset 0 0 50px rgba(255,123,79,.2)}}
+  .ring::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(255,215,0,.25);animation:spin 18s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .ring svg{width:84px;height:84px;animation:arrowmove 2.4s ease-in-out infinite}
+  @keyframes arrowmove{0%,100%{transform:translateY(8px)}50%{transform:translateY(-8px)}}
+  .v-capsule{background:linear-gradient(160deg,#1a2040,#0a0e1a)}
+  .envelope{width:78%;background:linear-gradient(160deg,#fff8ef,#ffe7cf);border-radius:16px;padding:26px;color:#3a2a1a;
+    box-shadow:0 20px 50px rgba(0,0,0,.4);transform:rotate(-3deg)}
+  .envelope .stamp{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#c0734a;font-weight:700;margin-bottom:12px}
+  .envelope .hw{font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;line-height:1.5}
+  .envelope .sig{margin-top:14px;font-family:'Playfair Display',serif;font-style:italic;font-size:.9rem;color:#a06a44;text-align:right}
+  .v-ritual{background:linear-gradient(160deg,#131932,#0a0e1a);padding:36px}
+  .checklist{width:100%}
+  .check-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(136,146,176,.14);border-radius:14px;margin-bottom:12px}
+  .check-item .cbox{width:26px;height:26px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center}
+  .check-item.done .cbox{background:var(--grad-warm)}
+  .check-item.done .cbox svg{stroke:#1a1206}
+  .check-item:not(.done) .cbox{border:2px solid rgba(136,146,176,.4)}
+  .check-item .cbox svg{width:15px;height:15px;stroke-width:3.5}
+  .check-item span{font-size:.95rem;color:var(--text)}
+  .check-item.done span{color:var(--muted)}
+  .v-score{background:radial-gradient(circle at 50% 40%,#1a2040,#0a0e1a);flex-direction:column;gap:24px}
+  .score-ring{position:relative;width:170px;height:170px}
+  .score-ring svg{transform:rotate(-90deg)}
+  .score-ring .pct{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .score-ring .pct b{font-size:2.6rem;font-weight:700;color:#fff;line-height:1}
+  .score-ring .pct small{font-size:.66rem;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
+  .score-bars{display:flex;gap:9px;align-items:flex-end;height:64px}
+  .score-bars i{width:14px;border-radius:6px 6px 0 0;background:var(--grad-warm);opacity:.9;animation:grow 1.6s ease both}
+  @keyframes grow{from{height:0}}
+
+  /* ---------- HOW ---------- */
+  .how{background:linear-gradient(180deg,#0c1124,#0a0e1a)}
+  .steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px}
+  .step{text-align:center;padding:14px}
+  .step-ic{width:88px;height:88px;border-radius:24px;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,rgba(26,32,64,.8),rgba(10,14,26,.4));border:1px solid rgba(255,179,71,.22)}
+  .step-ic svg{width:42px;height:42px;stroke:var(--amber)}
+  .step h3{font-size:1.25rem;margin-bottom:10px;color:#fff}
+  .step .sn{font-family:'Playfair Display',serif;color:var(--coral);font-size:.9rem;letter-spacing:.1em;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:.92rem;max-width:240px;margin:0 auto}
+  .step-arrow{color:var(--amber);opacity:.5;display:flex;align-items:center;justify-content:center}
+  .step-arrow svg{width:34px;height:34px}
+
+  /* ---------- FREE ---------- */
+  .free{padding:130px 0;text-align:center;background:radial-gradient(120% 100% at 50% 0%,rgba(255,215,0,.12),transparent 50%),#0a0e1a}
+  .free .huge{font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,7rem);font-weight:800;line-height:.95;margin-bottom:22px}
+  .free p{color:var(--muted);font-size:1.15rem;margin-bottom:8px}
+  .free .note{font-size:.95rem;color:var(--muted);opacity:.8}
+  .trust-row{display:inline-flex;gap:30px;margin-top:34px;flex-wrap:wrap;justify-content:center}
+  .trust-row div{display:flex;align-items:center;gap:9px;color:var(--text);font-weight:500;font-size:.95rem}
+  .trust-row svg{width:20px;height:20px;stroke:var(--gold)}
+
+  /* ---------- FAQ ---------- */
+  .faq{background:linear-gradient(180deg,#0a0e1a,#0c1124)}
+  .faq-list{max-width:760px;margin:0 auto}
+  .faq-item{border:1px solid rgba(136,146,176,.18);border-radius:16px;margin-bottom:14px;overflow:hidden;background:rgba(26,32,64,.3);transition:border-color .3s}
+  .faq-item.open{border-color:rgba(255,179,71,.4)}
+  .faq-q{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;
+    padding:22px 26px;cursor:pointer;background:none;border:none;color:#fff;font-family:inherit;font-size:1.06rem;font-weight:600;text-align:left}
+  .faq-q .ico{flex:none;width:24px;height:24px;position:relative;transition:transform .35s}
+  .faq-item.open .faq-q .ico{transform:rotate(45deg)}
+  .faq-q .ico::before,.faq-q .ico::after{content:"";position:absolute;background:var(--amber);border-radius:2px}
+  .faq-q .ico::before{top:11px;left:2px;right:2px;height:2px}
+  .faq-q .ico::after{left:11px;top:2px;bottom:2px;width:2px}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .faq-a p{padding:0 26px 24px;color:var(--muted);font-size:.98rem}
+
+  /* ---------- FINAL CTA ---------- */
+  .final{padding:140px 0;text-align:center;overflow:hidden;
+    background:linear-gradient(180deg,#0c1124 0%,#1a2040 45%,#5a3a5a 78%,#ff7b4f 100%)}
+  .final .stars{z-index:0}
+  .final .wrap{position:relative;z-index:3}
+  .final h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,7vw,4.2rem);font-weight:700;color:#fff;margin-bottom:18px;line-height:1.25}
+  .final p{color:rgba(255,255,255,.85);font-size:1.1rem;margin-bottom:38px}
+  .final .store-row{justify-content:center}
+  .final .store-badge{background:rgba(5,7,15,.55);backdrop-filter:blur(6px)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#05070f;padding:60px 0 36px;border-top:1px solid rgba(136,146,176,.12)}
+  .foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;margin-bottom:40px}
+  .foot-brand{display:flex;align-items:center;gap:12px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.6rem;margin-bottom:12px}
+  .foot-left .tag{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted)}
+  .foot-links{display:flex;gap:28px;flex-wrap:wrap}
+  .foot-links a{color:var(--muted);font-size:.92rem;transition:color .25s}
+  .foot-links a:hover{color:var(--text)}
+  .foot-bot{border-top:1px solid rgba(136,146,176,.1);padding-top:22px;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:900px){
+    .hero .wrap{grid-template-columns:1fr;text-align:center;gap:54px}
+    .hero-sub,.store-row{margin-left:auto;margin-right:auto}
+    .store-row{justify-content:center}
+    .hero-btns{justify-content:center}
+    .prob-grid{grid-template-columns:repeat(2,1fr)}
+    .feat{grid-template-columns:1fr;gap:40px;text-align:center;margin-bottom:90px}
+    .feat.flip .feat-text{order:0}
+    .feat-text p{margin-left:auto;margin-right:auto}
+    .steps{grid-template-columns:1fr;gap:8px}
+    .step-arrow{transform:rotate(90deg);padding:6px 0}
+  }
+  @media(max-width:640px){
+    .nav-links{display:none}
+    .nav-links.open{
+      display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;
+      background:rgba(10,14,26,.97);backdrop-filter:blur(20px);padding:22px 24px;gap:18px;
+      border-bottom:1px solid rgba(136,146,176,.16)}
+    .nav-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+    .nav-toggle span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+    .sect{padding:80px 0}
+    .prob-grid{grid-template-columns:1fr}
+    .free .huge{font-size:clamp(2.6rem,18vw,4rem)}
+    .phone{width:260px;height:540px}
+  }
+
+  /* ================================================================
+     APP MODAL (SPA overlay)
+  ================================================================ */
+  #app-modal{
+    display:none;position:fixed;inset:0;z-index:1000;
+    background:rgba(5,7,15,.92);backdrop-filter:blur(20px);
+    align-items:center;justify-content:center;
+    animation:modalIn .3s ease;
+  }
+  #app-modal.open{display:flex}
+  @keyframes modalIn{from{opacity:0}to{opacity:1}}
+
+  .modal-close{
+    position:absolute;top:20px;right:24px;
+    background:rgba(255,255,255,.1);border:none;color:#fff;
+    width:40px;height:40px;border-radius:50%;font-size:20px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .2s;
+  }
+  .modal-close:hover{background:rgba(255,255,255,.2)}
+
+  /* phone shell */
+  .app-phone{
+    width:min(340px, 90vw);
+    height:min(700px, 92dvh);
+    border-radius:48px;
+    background:linear-gradient(155deg,#2a3050,#11152a);
+    padding:14px;
+    box-shadow:0 50px 120px rgba(0,0,0,.8),0 0 0 2px rgba(255,255,255,.06);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .app-phone-inner{
+    flex:1;border-radius:36px;overflow:hidden;background:#0a0e1a;
+    display:flex;flex-direction:column;position:relative;
+  }
+  .app-notch{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    width:90px;height:22px;background:#05070f;border-radius:12px;z-index:20;
+  }
+
+  /* screens inside the app phone */
+  .app-screen{display:none;flex-direction:column;flex:1;overflow-y:auto;scrollbar-width:none}
+  .app-screen::-webkit-scrollbar{display:none}
+  .app-screen.active{display:flex}
+
+  /* bottom nav inside phone */
+  .app-nav{
+    display:flex;background:rgba(10,14,26,.95);
+    border-top:1px solid rgba(255,255,255,.07);
+    flex-shrink:0;
+  }
+  .app-nav-btn{
+    flex:1;background:none;border:none;
+    color:rgba(136,146,176,.7);font-size:20px;
+    padding:10px 0 16px;cursor:pointer;transition:color .2s;
+    font-family:inherit;
+  }
+  .app-nav-btn.active{color:#ff7b4f}
+
+  /* shared app styles */
+  .app-card{
+    background:#0d1225;border:1px solid #1e2a4a;
+    border-radius:14px;padding:16px;margin:0 16px 12px;
+  }
+  .app-btn-primary{
+    background:#ff7b4f;color:#fff;border:none;border-radius:12px;
+    padding:14px 20px;font-size:15px;font-weight:600;
+    cursor:pointer;width:100%;font-family:inherit;
+    transition:opacity .2s;
+  }
+  .app-btn-primary:active{opacity:.8}
+  .app-h{padding:52px 18px 12px;font-size:20px;font-weight:700}
+
+  /* ── HOME screen ── */
+  .s-home{
+    align-items:center;justify-content:center;
+    min-height:100%;padding:52px 20px 20px;
+    background:linear-gradient(180deg,#0a0e1a 0%,#131932 30%,#1a2040 52%,#5a3a5a 72%,#ff7b4f 90%,#ffb347 100%);
+    background-size:100% 200%;
+  }
+  .home-logo{font-size:11px;letter-spacing:6px;color:#8892b0;margin-bottom:2px}
+  .home-sub{font-size:10px;color:#6b7280;margin-bottom:32px}
+  .home-horizon{width:100%;position:relative;height:56px;margin-bottom:28px}
+  .home-horizon::after{
+    content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;
+    background:linear-gradient(90deg,transparent,#ff7b4f,#ffb347,#ff7b4f,transparent);
+    border-radius:1px;animation:hpulse 3s ease-in-out infinite;
+  }
+  .home-horizon::before{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
+    background:radial-gradient(ellipse 60% 100% at 50% 100%,rgba(255,123,79,.18) 0%,transparent 70%);
+    animation:gPulse 3s ease-in-out infinite;
+  }
+  @keyframes hpulse{0%,100%{opacity:.4;transform:scaleX(.7)}50%{opacity:1;transform:scaleX(1)}}
+  @keyframes gPulse{0%,100%{opacity:.4}50%{opacity:.8}}
+  .home-clock{font-size:58px;font-weight:200;letter-spacing:-2px;color:#fff;line-height:1}
+  .home-date{font-size:11px;color:#6b7280;margin-top:4px;margin-bottom:28px}
+  .home-alarm-time{color:#ffb347;font-size:26px;font-weight:700}
+  .home-alarm-sub{font-size:11px;color:#6b7280;margin-top:2px}
+  .home-intention{font-size:12px;color:rgba(255,255,255,.4);font-style:italic;margin:12px 0 20px;max-width:240px;text-align:center;line-height:1.5}
+  .home-test-btn{margin-top:10px;background:none;border:none;color:#4a5568;font-size:12px;cursor:pointer;padding:6px 12px;font-family:inherit}
+
+  /* ── ALARM SET screen ── */
+  .time-picker{display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 0}
+  .time-spinner{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .spin-btn{
+    background:rgba(255,123,79,.15);border:none;color:#ff7b4f;
+    width:40px;height:40px;border-radius:10px;font-size:18px;cursor:pointer;font-family:inherit;
+  }
+  .spin-val{font-size:52px;font-weight:200;min-width:74px;text-align:center;color:#fff;line-height:1}
+  .time-colon{font-size:44px;color:#ff7b4f;font-weight:200;margin-bottom:4px}
+  .sleep-badge{
+    text-align:center;font-size:12px;color:#6b7280;margin-bottom:4px;
+    padding:6px 14px;background:rgba(255,123,79,.08);border-radius:20px;
+    display:inline-block;
+  }
+  .app-textarea{
+    width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;color:#e8eaf6;font-size:14px;padding:12px;
+    resize:none;height:88px;outline:none;line-height:1.5;font-family:inherit;
+  }
+  .app-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:0 18px 8px}
+  .toggle-track{
+    width:46px;height:26px;border-radius:13px;
+    position:relative;cursor:pointer;transition:background .2s;
+  }
+  .toggle-thumb{
+    position:absolute;top:3px;width:20px;height:20px;border-radius:50%;
+    background:#fff;transition:left .2s;
+  }
+
+  /* ── RITUAL screen ── */
+  .ritual-item{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;
+  }
+  .ritual-item:last-child{border-bottom:none}
+  .ritual-circle{
+    width:24px;height:24px;border-radius:50%;border:2px solid #4a5568;
+    flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    transition:all .2s;font-size:13px;
+  }
+  .ritual-circle.done{background:#ff7b4f;border-color:#ff7b4f;color:#fff}
+  .ritual-label{font-size:14px;transition:all .2s}
+  .ritual-label.done{color:#4a5568;text-decoration:line-through}
+  .prog-bg{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin:8px 0}
+  .prog-fill{height:100%;background:#ff7b4f;border-radius:2px;transition:width .4s}
+
+  /* ── WAKEUP screen ── */
+  .s-wakeup{
+    align-items:center;justify-content:center;
+    min-height:100%;padding:24px;text-align:center;
+  }
+  .swipe-zone{
+    width:200px;height:200px;border-radius:50%;
+    border:2px solid rgba(255,123,79,.3);
+    display:flex;align-items:center;justify-content:center;
+    font-size:70px;cursor:pointer;touch-action:none;
+    transition:background .2s,border-color .2s;margin:20px auto;
+  }
+  .swipe-zone.correct{background:rgba(0,200,100,.1);border-color:#00c864}
+  .swipe-zone.wrong{background:rgba(255,68,68,.1);border-color:#f44}
+
+  /* ── STATS screen ── */
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 12px}
+  .stat-card{background:#0d1225;border:1px solid #1e2a4a;border-radius:12px;padding:14px;text-align:center}
+  .stat-val{font-size:26px;font-weight:700}
+  .stat-lbl{font-size:10px;color:#6b7280;margin-top:4px;line-height:1.3}
+  .bar-chart{display:flex;align-items:flex-end;gap:6px;height:80px;padding:0 16px 0}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+  .bar-fill{width:100%;background:#ff7b4f;border-radius:3px 3px 0 0;transition:height .5s;min-height:4px}
+  .bar-day{font-size:9px;color:#4a5568}
+  .app-toast{
+    position:absolute;bottom:80px;left:50%;transform:translateX(-50%);
+    background:rgba(26,32,64,.96);border:1px solid rgba(255,123,79,.3);
+    color:#e8eaf6;padding:10px 20px;border-radius:100px;font-size:13px;
+    white-space:nowrap;z-index:50;animation:fadeUp .3s ease;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-brand" href="#top">
+    <span class="grad-text serif">DAWN</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#features">特徴</a>
+    <a href="#how">仕組み</a>
+    <a href="#faq">FAQ</a>
+    <button class="btn btn-demo" onclick="openApp()">📱 デモを試す</button>
+    <a href="#download" class="btn btn-cta">無料ダウンロード</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="stars" id="heroStars"></div>
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="hero-logo serif">DAWN</div>
+      <p class="hero-tag">「夜の約束を、朝の力に。」</p>
+      <p class="hero-sub">アラームとは、夜の自分が朝の自分に送る約束。<br>DAWNは、その約束を確かに届けるための、まったく新しい目覚めの体験です。</p>
+      <div class="badge-free">完全無料・広告なし</div>
+      <div class="hero-btns">
+        <button class="btn btn-cta" onclick="openApp()">📱 インタラクティブデモを試す</button>
+      </div>
+      <div class="store-row" id="download">
+        <a href="#" class="store-badge" aria-label="App Storeでダウンロード">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.36 12.78c.02-2.07 1.69-3.06 1.76-3.11-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.03 8.23.68 1 1.5 2.11 2.56 2.07 1.03-.04 1.42-.66 2.66-.66 1.24 0 1.59.66 2.68.64 1.11-.02 1.81-1.01 2.49-2.01.78-1.15 1.1-2.27 1.12-2.32-.02-.01-2.15-.82-2.17-3.27zM14.3 6.7c.56-.69.94-1.64.84-2.6-.81.03-1.8.54-2.39 1.22-.52.6-.98 1.57-.86 2.49.91.07 1.84-.46 2.41-1.11z"/></svg>
+          <span><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span>
+        </a>
+        <a href="#" class="store-badge" aria-label="Google Playでダウンロード">
+          <svg viewBox="0 0 24 24"><path fill="#00d4ff" d="M3.6 2.3c-.3.3-.5.8-.5 1.4v16.6c0 .6.2 1.1.5 1.4l.1.1L13 12.1v-.2L3.7 2.2z"/><path fill="#ffd700" d="M16.3 15.3 13 12.1v-.2l3.3-3.2.1.1 3.9 2.2c1.1.6 1.1 1.7 0 2.3l-3.9 2.2z"/><path fill="#ff7b4f" d="M16.4 15.2 13 12 3.6 21.7c.4.4 1 .4 1.7.1l11.1-6.6z"/><path fill="#00c853" d="M16.4 8.8 5.3 2.2c-.7-.4-1.3-.3-1.7.1L13 12z"/></svg>
+          <span><span class="sb-small">今すぐ手に入れる</span><span class="sb-big">Google Play</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="screen-sky"></div>
+          <div class="phone-notch"></div>
+          <div class="screen-sun-glow"></div>
+          <svg class="screen-svg" viewBox="0 0 300 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="arc" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ff7b4f"/>
+              </linearGradient>
+            </defs>
+            <path d="M-20 200 Q150 70 320 200 Z" fill="url(#arc)" opacity="0.25"/>
+            <path d="M-20 200 Q150 70 320 200" fill="none" stroke="#ffe7b0" stroke-width="2" opacity="0.7"/>
+          </svg>
+          <div class="screen-time">
+            <div class="t" id="heroClockDisplay">6:24<span>AM</span></div>
+            <div class="lbl">現在</div>
+          </div>
+          <div class="screen-alarm">
+            <div class="next">起床まで <b>あと 36 分</b></div>
+          </div>
+          <div class="screen-promise">
+            <div class="pl">夜の自分からの約束</div>
+            <div class="pt">「朝の散歩、忘れないで。」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="sect problem">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <div class="eyebrow">The Problem</div>
+      <h2>なぜ、アラームは<span class="grad-text">嫌われる</span>のか</h2>
+      <p>毎朝の戦いを、私たちは当たり前だと思い込んでいました。本当はもっと良い目覚めがあるはずです。</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card reveal">
+        <div class="prob-ic"><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div>
+        <h3>無意識スヌーズ</h3>
+        <p>気づけば指が勝手にスヌーズを押している。脳が起きる前に手が動いてしまう。</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-ic"><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M19 5a14 14 0 0 1 0 14M15.5 8.5a7 7 0 0 1 0 7"/></svg></div>
+        <h3>不快なベル音</h3>
+        <p>耳をつんざく電子音で叩き起こされる。一日のはじまりが、不快感で台なしに。</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-ic"><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.5 1.5c0 1.5-2 2-2 3.5M12 17h.01"/></svg></div>
+        <h3>理由を忘れている</h3>
+        <p>なぜこの時間に起きたかったのか。眠気の中で、夜の決意はどこかへ消えてしまう。</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-ic"><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3v18M3 7l9-4 9 4M5 12l7-3 7 3M5 17l7-3 7 3"/></svg></div>
+        <h3>厳しすぎか優しすぎ</h3>
+        <p>罰ゲームのように厳しいか、簡単に消せてしまうか。ちょうどいい目覚めが存在しなかった。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philo">
+  <div class="wrap reveal">
+    <div class="eyebrow">Our Philosophy</div>
+    <p class="big serif">アラームとは、命令ではなく<br><span class="grad-text">約束</span>である。</p>
+    <p class="from-to serif grad-text">夜の自分から、朝の自分へ。</p>
+    <p>あなたが眠る前に込めた想いを、目覚めの瞬間にそっと手渡す。DAWNは、未来のあなたへの優しいメッセンジャーです。</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sect" id="features">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <div class="eyebrow">Features</div>
+      <h2>目覚めを、<span class="grad-text">設計し直す</span></h2>
+      <p>5つの体験が、毎朝を静かに変えていきます。</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-text">
+        <div class="feat-num serif">Feature 01</div>
+        <h3>ホライゾンインターフェース</h3>
+        <p>現在時刻から起床時刻まで、画面の空の色が刻一刻と変化する「生きた地平線」。あと何時間眠れるのかを、数字ではなく光のグラデーションで直感的に感じられます。</p>
+      </div>
+      <div class="feat-visual">
+        <div class="vcard v-horizon"><div class="vsun"></div></div>
+      </div>
+    </div>
+    <div class="feat flip reveal">
+      <div class="feat-text">
+        <div class="feat-num serif">Feature 02</div>
+        <h3>ランダム起床チャレンジ</h3>
+        <p>4方向のスワイプチャレンジが毎朝ランダムに出題。慣れによる無意識のスヌーズを防ぎ、脳をしっかり目覚めへ導きます。</p>
+      </div>
+      <div class="feat-visual">
+        <div class="vcard v-gesture">
+          <div class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#arc2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="arc2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ff7b4f"/></linearGradient></defs>
+              <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-text">
+        <div class="feat-num serif">Feature 03</div>
+        <h3>タイムカプセル</h3>
+        <p>夜に書いたメッセージが、翌朝の起床時にそっと届きます。眠る前のあなたの言葉が、起きたばかりのあなたの背中を押します。</p>
+      </div>
+      <div class="feat-visual">
+        <div class="vcard v-capsule">
+          <div class="envelope">
+            <div class="stamp">To: 明日の私</div>
+            <div class="hw">「昨日のあなたが決めたこと、<br>きっとできるよ。」</div>
+            <div class="sig">— 23:48 のあなたより</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feat flip reveal">
+      <div class="feat-text">
+        <div class="feat-num serif">Feature 04</div>
+        <h3>就寝前リチュアル</h3>
+        <p>ベッドに入る前のチェックリストと個人メッセージ。心と体を整える小さな儀式が、質の高い睡眠と、すっきりとした目覚めへつながります。</p>
+      </div>
+      <div class="feat-visual">
+        <div class="vcard v-ritual">
+          <div class="checklist">
+            <div class="check-item done"><span class="cbox"><svg fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>スマホを充電器へ</span></div>
+            <div class="check-item done"><span class="cbox"><svg fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>明日の服を準備</span></div>
+            <div class="check-item done"><span class="cbox"><svg fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>深呼吸を3回</span></div>
+            <div class="check-item"><span class="cbox"></span><span>カプセルを書く</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-text">
+        <div class="feat-num serif">Feature 05</div>
+        <h3>モーニングスコア統計</h3>
+        <p>起床チャレンジ達成率、連続日数、7日グラフを可視化。あなたの朝のパターンが美しく可視化され、少しずつ良い習慣が積み上がっていきます。</p>
+      </div>
+      <div class="feat-visual">
+        <div class="vcard v-score">
+          <div class="score-ring">
+            <svg width="170" height="170" viewBox="0 0 170 170">
+              <circle cx="85" cy="85" r="74" fill="none" stroke="rgba(136,146,176,.2)" stroke-width="12"/>
+              <circle cx="85" cy="85" r="74" fill="none" stroke="url(#arc)" stroke-width="12" stroke-linecap="round" stroke-dasharray="465" stroke-dashoffset="93"/>
+            </svg>
+            <div class="pct"><b>82</b><small>Morning Score</small></div>
+          </div>
+          <div class="score-bars">
+            <i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:78%"></i><i style="height:66%"></i><i style="height:90%"></i><i style="height:82%"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sect how" id="how">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>3つのステップ</h2>
+      <p>夜に約束を込め、眠り、朝に受け取る。たったそれだけ。</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 0 12 6 6 0 0 1 9 5 9 9 0 1 1-9-17z"/><path d="M17 4l.6 1.6L19 6l-1.4.4L17 8l-.6-1.6L15 6l1.4-.4z"/></svg></div>
+        <div class="sn serif">夜</div>
+        <h3>カプセルを書く</h3>
+        <p>就寝前のリチュアルで心を整え、明日の自分へメッセージを残します。</p>
+      </div>
+      <div class="step-arrow"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="step">
+        <div class="step-ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
+        <div class="sn serif">夜中</div>
+        <h3>ぐっすり眠る</h3>
+        <p>ホライゾンが静かに夜を見守ります。あなたはただ、安心して休むだけ。</p>
+      </div>
+      <div class="step-arrow"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="step">
+        <div class="step-ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="13" r="4"/><path d="M12 3v2M4.2 7.2l1.4 1.4M19.8 7.2l-1.4 1.4M2 13h2M20 13h2"/></svg></div>
+        <div class="sn serif">朝</div>
+        <h3>メッセージが届く</h3>
+        <p>起床時にカプセルが開封。ジェスチャーチャレンジで、確かに目を覚まします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE -->
+<section class="free">
+  <div class="wrap reveal">
+    <div class="eyebrow">Pricing</div>
+    <div class="huge serif grad-text">完全無料</div>
+    <p>DAWNのすべての機能を、一円も払わずに使えます。</p>
+    <p class="note">広告なし・サブスクなし(現時点)。あなたの朝の時間を、私たちが邪魔することはありません。</p>
+    <div class="trust-row">
+      <div><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>データは端末内のみ</div>
+      <div><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 11l2 2 4-4"/></svg>登録不要ですぐ使える</div>
+      <div><svg fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>iOS / Android 対応</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sect faq" id="faq">
+  <div class="wrap">
+    <div class="sect-head reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2>よくある質問</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q">パートナーがいても使える？<span class="ico"></span></button>
+        <div class="faq-a"><p>はい。DAWNのジェスチャーチャレンジは触覚ベースで設計されており、大きな音を必要としません。隣で眠るパートナーを起こさずに、あなただけが確実に目覚められます。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">データはどこに保存される？<span class="ico"></span></button>
+        <div class="faq-a"><p>すべて端末内に保存されます。タイムカプセルのメッセージも、起床スコアも、外部サーバーに送信することは一切ありません。あなたの夜の言葉は、あなただけのものです。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Android にも対応している？<span class="ico"></span></button>
+        <div class="faq-a"><p>はい。DAWNは iOS と Android の両方に対応しています。App Store または Google Play からダウンロードしてご利用ください。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">本当に無料なの？<span class="ico"></span></button>
+        <div class="faq-a"><p>完全無料です。現時点で課金要素やサブスクリプションはありません。広告も表示しません。安心してすべての機能をお使いいただけます。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">このデモは実際のアプリと同じ？<span class="ico"></span></button>
+        <div class="faq-a"><p>画面上部の「デモを試す」ボタンから、ブラウザ上でインタラクティブなプロトタイプを体験できます。アラーム設定、就寝リチュアル、スワイプ起床チャレンジまで、すべてlocalStorageを使って実際に動作します。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="stars" id="finalStars"></div>
+  <div class="wrap">
+    <h2>明日の朝を、<br>変えてみませんか？</h2>
+    <p>今夜、最初の約束を書いてみてください。完全無料で、すぐにはじめられます。</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px">
+      <button class="btn btn-cta" onclick="openApp()" style="font-size:1rem;padding:14px 28px">📱 デモを試す</button>
+    </div>
+    <div class="store-row">
+      <a href="#" class="store-badge" aria-label="App Storeでダウンロード">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.36 12.78c.02-2.07 1.69-3.06 1.76-3.11-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.03 8.23.68 1 1.5 2.11 2.56 2.07 1.03-.04 1.42-.66 2.66-.66 1.24 0 1.59.66 2.68.64 1.11-.02 1.81-1.01 2.49-2.01.78-1.15 1.1-2.27 1.12-2.32-.02-.01-2.15-.82-2.17-3.27zM14.3 6.7c.56-.69.94-1.64.84-2.6-.81.03-1.8.54-2.39 1.22-.52.6-.98 1.57-.86 2.49.91.07 1.84-.46 2.41-1.11z"/></svg>
+        <span><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span>
+      </a>
+      <a href="#" class="store-badge" aria-label="Google Playでダウンロード">
+        <svg viewBox="0 0 24 24"><path fill="#00d4ff" d="M3.6 2.3c-.3.3-.5.8-.5 1.4v16.6c0 .6.2 1.1.5 1.4l.1.1L13 12.1v-.2L3.7 2.2z"/><path fill="#ffd700" d="M16.3 15.3 13 12.1v-.2l3.3-3.2.1.1 3.9 2.2c1.1.6 1.1 1.7 0 2.3l-3.9 2.2z"/><path fill="#ff7b4f" d="M16.4 15.2 13 12 3.6 21.7c.4.4 1 .4 1.7.1l11.1-6.6z"/><path fill="#00c853" d="M16.4 8.8 5.3 2.2c-.7-.4-1.3-.3-1.7.1L13 12z"/></svg>
+        <span><span class="sb-small">今すぐ手に入れる</span><span class="sb-big">Google Play</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-left">
+        <div class="foot-brand"><span class="grad-text serif">DAWN</span></div>
+        <p class="tag">夜の約束を、朝の力に。</p>
+      </div>
+      <div class="foot-links">
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+        <a href="#">お問い合わせ</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 DAWN. All rights reserved.</span>
+      <span>Made for better mornings.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     APP MODAL — Interactive SPA
+================================================================ -->
+<div id="app-modal" role="dialog" aria-modal="true" aria-label="DAWNアプリデモ">
+  <button class="modal-close" onclick="closeApp()" aria-label="閉じる">×</button>
+
+  <div class="app-phone">
+    <div class="app-notch"></div>
+    <div class="app-phone-inner" id="appInner">
+
+      <!-- ── HOME ── -->
+      <div class="app-screen active s-home" id="sc-home">
+        <div class="home-logo">D A W N</div>
+        <div class="home-sub">夜の自分が朝の自分に送る約束</div>
+        <div class="home-horizon"></div>
+        <div class="home-clock" id="appClock">00:00</div>
+        <div class="home-date" id="appDate"></div>
+        <div id="homeAlarmArea" style="text-align:center">
+          <div class="home-alarm-time" id="homeAlarmTime">アラーム未設定</div>
+          <div class="home-alarm-sub" id="homeAlarmSub"></div>
+          <div class="home-intention" id="homeIntention"></div>
+        </div>
+        <button class="app-btn-primary" style="max-width:260px;margin-top:16px" onclick="appNav('ritual')">🌙 就寝リチュアルを始める</button>
+        <button class="home-test-btn" onclick="appNav('wakeup')">🔔 起床テスト</button>
+      </div>
+
+      <!-- ── ALARM SET ── -->
+      <div class="app-screen" id="sc-alarm">
+        <div class="app-h">⏰ アラームを設定</div>
+        <div class="app-toggle-row">
+          <span style="font-size:13px;color:#8892b0">アラームを有効にする</span>
+          <div id="alarmToggle" class="toggle-track" onclick="toggleAlarm()"
+            style="background:#4a5568">
+            <div class="toggle-thumb" style="left:3px"></div>
+          </div>
+        </div>
+
+        <div class="app-card">
+          <div class="time-picker">
+            <div class="time-spinner">
+              <button class="spin-btn" onclick="adjTime('h',1)">＋</button>
+              <div class="spin-val" id="spinH">07</div>
+              <button class="spin-btn" onclick="adjTime('h',-1)">－</button>
+            </div>
+            <div class="time-colon">:</div>
+            <div class="time-spinner">
+              <button class="spin-btn" onclick="adjTime('m',5)">＋</button>
+              <div class="spin-val" id="spinM">00</div>
+              <button class="spin-btn" onclick="adjTime('m',-5)">－</button>
+            </div>
+          </div>
+          <div style="text-align:center">
+            <span class="sleep-badge" id="sleepCalc">今から寝ると — の睡眠</span>
+          </div>
+        </div>
+
+        <div class="app-card">
+          <div style="font-size:12px;color:#8892b0;margin-bottom:8px">🌟 明日の意図</div>
+          <textarea class="app-textarea" id="intentionInput"
+            placeholder="明日の朝、自分に伝えたいことは？" maxlength="200"
+            oninput="updateCharCount(this,'intentionCount',200)"></textarea>
+          <div style="text-align:right;font-size:11px;color:#4a5568;margin-top:4px"><span id="intentionCount">0</span>/200</div>
+        </div>
+
+        <div style="padding:4px 16px 20px">
+          <button class="app-btn-primary" onclick="saveAlarmData()">保存する</button>
+        </div>
+      </div>
+
+      <!-- ── RITUAL ── -->
+      <div class="app-screen" id="sc-ritual">
+        <div class="app-h">🌙 おやすみ前のリチュアル</div>
+        <div class="app-card">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:12px;color:#8892b0">完了</span>
+            <span style="font-size:12px;color:#ff7b4f" id="ritualCount">0/5</span>
+          </div>
+          <div class="prog-bg"><div class="prog-fill" id="ritualProg" style="width:0%"></div></div>
+          <div id="ritualList" style="margin-top:8px"></div>
+        </div>
+
+        <div class="app-card">
+          <div style="font-size:12px;color:#ffb347;margin-bottom:8px">🌙 朝の自分へのメッセージ</div>
+          <textarea class="app-textarea" id="capsuleInput" style="height:110px"
+            placeholder="明日の朝の自分へ、今夜の気持ちや願いを書いてみましょう..." maxlength="300"
+            oninput="updateCharCount(this,'capsuleCount',300)"></textarea>
+          <div style="text-align:right;font-size:11px;color:#4a5568;margin-top:4px"><span id="capsuleCount">0</span>/300</div>
+        </div>
+
+        <div style="padding:4px 16px 20px">
+          <button class="app-btn-primary" onclick="saveRitual()">眠りにつく ✨</button>
+        </div>
+      </div>
+
+      <!-- ── WAKE UP ── -->
+      <div class="app-screen s-wakeup" id="sc-wakeup">
+        <!-- Phase managed by JS -->
+        <div id="wakePhase1">
+          <div style="font-size:72px;cursor:pointer;margin-bottom:16px;transition:transform .3s" id="envelopeIcon" onclick="openEnvelope()">✉️</div>
+          <div style="font-size:17px;font-weight:600;color:#fff;margin-bottom:8px">おはよう</div>
+          <div style="font-size:13px;color:#8892b0;line-height:1.6;margin-bottom:20px">昨夜のあなたからメッセージが届いています</div>
+          <div id="capsuleReveal" style="display:none;width:100%;margin-bottom:16px">
+            <div class="app-card" style="text-align:left;margin:0">
+              <div style="font-size:11px;color:#ff7b4f;margin-bottom:6px">🌙 昨夜のあなたより</div>
+              <div style="font-size:14px;color:#e8eaf6;line-height:1.7" id="capsuleMsg">メッセージはありません</div>
+            </div>
+            <div style="font-size:13px;color:rgba(255,255,255,.4);font-style:italic;margin-top:12px" id="intentionReveal"></div>
+            <button class="app-btn-primary" style="margin-top:20px" onclick="startChallenge()">起床チャレンジへ →</button>
+          </div>
+          <div id="tapHint" style="font-size:12px;color:#ff7b4f">タップして開封する</div>
+        </div>
+
+        <div id="wakePhase2" style="display:none;width:100%;text-align:center">
+          <div style="font-size:12px;color:#8892b0;margin-bottom:4px">起床チャレンジ</div>
+          <div style="font-size:20px;font-weight:700;color:#ff7b4f;margin-bottom:24px" id="challengeProgress">1 / 4</div>
+          <div style="font-size:14px;color:#8892b0;margin-bottom:12px">この方向にスワイプ！</div>
+          <div style="font-size:80px;line-height:1;margin-bottom:4px" id="challengeDir">↑</div>
+          <div class="swipe-zone" id="swipeZone" onpointerdown="swipeStart(event)" onpointerup="swipeEnd(event)">
+            <span id="swipeHint" style="font-size:13px;color:#4a5568">スワイプ</span>
+          </div>
+        </div>
+
+        <div id="wakePhase3" style="display:none;text-align:center">
+          <div style="font-size:72px;margin-bottom:16px">✨</div>
+          <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:8px">おはよう！</div>
+          <div style="font-size:14px;color:#8892b0;margin-bottom:32px">今日も素晴らしい一日を</div>
+          <button class="app-btn-primary" onclick="appNav('home')">ホームへ</button>
+        </div>
+      </div>
+
+      <!-- ── STATS ── -->
+      <div class="app-screen" id="sc-stats">
+        <div class="app-h">📊 あなたの記録</div>
+        <div class="app-card" style="text-align:center;padding:20px">
+          <div style="font-size:32px">🔥</div>
+          <div style="font-size:32px;font-weight:800;color:#ffb347" id="streakNum">0</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:2px">日連続</div>
+        </div>
+        <div class="bar-chart" id="barChart" style="margin-bottom:12px"></div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-val" style="color:#ff7b4f" id="avgRitual">0.0</div>
+            <div class="stat-lbl">平均リチュアル<br>スコア /5</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" style="color:#ffb347" id="challengeRate">0%</div>
+            <div class="stat-lbl">起床チャレンジ<br>達成率</div>
+          </div>
+        </div>
+        <div class="app-card" style="text-align:center">
+          <div class="stat-val" style="color:#a78bfa" id="totalDays">0</div>
+          <div class="stat-lbl" style="font-size:12px">総記録日数</div>
+        </div>
+        <div style="padding:0 16px 24px;font-size:12px;color:#4a5568;text-align:center" id="statsEmpty">
+          まだ記録がありません<br>就寝リチュアルを完了すると記録されます
+        </div>
+      </div>
+
+    </div><!-- /app-phone-inner -->
+
+    <!-- Bottom Nav -->
+    <nav class="app-nav" id="appNav">
+      <button class="app-nav-btn active" onclick="appNav('home')" id="nav-home">🌅</button>
+      <button class="app-nav-btn" onclick="appNav('alarm')" id="nav-alarm">⏰</button>
+      <button class="app-nav-btn" onclick="appNav('ritual')" id="nav-ritual">🌙</button>
+      <button class="app-nav-btn" onclick="appNav('stats')" id="nav-stats">📊</button>
+    </nav>
+  </div><!-- /app-phone -->
+</div><!-- /app-modal -->
+
+<script>
+/* ================================================================
+   LP Scripts
+================================================================ */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+window.addEventListener('scroll', onScroll); onScroll();
+
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+function makeStars(el, count){
+  let html = '';
+  for(let i=0;i<count;i++){
+    const size = (Math.random()*2.2+0.6).toFixed(1);
+    const top = (Math.random()*70).toFixed(1);
+    const left = (Math.random()*100).toFixed(1);
+    const o = (Math.random()*0.5+0.25).toFixed(2);
+    const d = (Math.random()*4+2.5).toFixed(1);
+    const delay = (Math.random()*4).toFixed(1);
+    html += `<span class="star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;--o:${o};--d:${d}s;animation-delay:${delay}s"></span>`;
+  }
+  el.innerHTML = html;
+}
+makeStars(document.getElementById('heroStars'), 60);
+makeStars(document.getElementById('finalStars'), 40);
+
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const ans = item.querySelector('.faq-a');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!open){
+      item.classList.add('open');
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  });
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Hero clock
+function updateHeroClock(){
+  const d = new Date();
+  const h = String(d.getHours()).padStart(2,'0');
+  const m = String(d.getMinutes()).padStart(2,'0');
+  const ampm = d.getHours() < 12 ? 'AM' : 'PM';
+  const el = document.getElementById('heroClockDisplay');
+  if(el) el.innerHTML = `${h}:${m}<span>${ampm}</span>`;
+}
+updateHeroClock();
+setInterval(updateHeroClock, 1000);
+
+/* ================================================================
+   APP SPA
+================================================================ */
+const KEYS = {
+  alarm: 'dawn_alarm',
+  ritual: 'dawn_ritual',
+  capsule: 'dawn_capsule',
+  stats: 'dawn_stats',
+};
+
+const RITUAL_DEFAULTS = [
+  {id:1, label:'📱 スマホを枕元から離した', checked:false},
+  {id:2, label:'💧 水を飲んだ', checked:false},
+  {id:3, label:'🌡️ 部屋の温度を調整した', checked:false},
+  {id:4, label:'📖 明日の準備ができている', checked:false},
+  {id:5, label:'🧘 深呼吸を3回した', checked:false},
+];
+
+function store(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+function load(key, fb){ try{ const v=localStorage.getItem(key); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+
+/* ---- State ---- */
+let appH = parseInt((load(KEYS.alarm, {time:'07:00'}).time||'07:00').split(':')[0]);
+let appM = parseInt((load(KEYS.alarm, {time:'07:00'}).time||'07:00').split(':')[1]);
+let alarmActive = load(KEYS.alarm, {}).active || false;
+let intentionVal = load(KEYS.alarm, {}).intention || '';
+let ritualItems = load(KEYS.ritual, RITUAL_DEFAULTS.map(i=>({...i})));
+if(!ritualItems || ritualItems.length !== 5) ritualItems = RITUAL_DEFAULTS.map(i=>({...i}));
+let wakePhase = 1;
+let challenges = [], challengeIdx = 0;
+let swipeStartX = 0, swipeStartY = 0;
+
+/* ---- Modal ---- */
+function openApp(){
+  document.getElementById('app-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  refreshApp();
+  startAppClock();
+}
+function closeApp(){
+  document.getElementById('app-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  stopAppClock();
+}
+document.getElementById('app-modal').addEventListener('click', function(e){
+  if(e.target === this) closeApp();
+});
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeApp(); });
+
+/* ---- App Clock ---- */
+let clockTimer;
+function startAppClock(){
+  updateAppClock();
+  clockTimer = setInterval(updateAppClock, 1000);
+}
+function stopAppClock(){ clearInterval(clockTimer); }
+function updateAppClock(){
+  const d = new Date();
+  const h = String(d.getHours()).padStart(2,'0');
+  const m = String(d.getMinutes()).padStart(2,'0');
+  const el = document.getElementById('appClock');
+  if(el) el.textContent = `${h}:${m}`;
+  const dateEl = document.getElementById('appDate');
+  if(dateEl) dateEl.textContent = d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+}
+
+/* ---- Navigation ---- */
+let currentScreen = 'home';
+function appNav(id){
+  currentScreen = id;
+  document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.app-nav-btn').forEach(b => b.classList.remove('active'));
+  const sc = document.getElementById('sc-'+id);
+  if(sc){ sc.classList.add('active'); sc.scrollTop = 0; }
+  const nb = document.getElementById('nav-'+id);
+  if(nb) nb.classList.add('active');
+  // wakeup hides nav
+  document.getElementById('appNav').style.display = id==='wakeup' ? 'none' : 'flex';
+  if(id==='home') refreshHome();
+  if(id==='alarm') refreshAlarm();
+  if(id==='ritual') refreshRitual();
+  if(id==='wakeup') initWakeup();
+  if(id==='stats') refreshStats();
+}
+
+function refreshApp(){
+  appNav(currentScreen);
+}
+
+/* ---- HOME ---- */
+function refreshHome(){
+  const alarm = load(KEYS.alarm, {});
+  const atEl = document.getElementById('homeAlarmTime');
+  const subEl = document.getElementById('homeAlarmSub');
+  const intEl = document.getElementById('homeIntention');
+  if(alarm.active){
+    atEl.textContent = '⏰ ' + alarm.time;
+    atEl.style.color = '#ffb347';
+    const sl = sleepDur(alarm.time);
+    subEl.textContent = `あと ${sl.h}時間${sl.m}分の睡眠`;
+    intEl.textContent = alarm.intention ? `「${alarm.intention}」` : '';
+  } else {
+    atEl.textContent = 'アラーム未設定';
+    atEl.style.color = '#4a5568';
+    subEl.textContent = '';
+    intEl.textContent = '';
+  }
+}
+
+function sleepDur(t){
+  const [ah,am] = t.split(':').map(Number);
+  const now = new Date();
+  const alarm = new Date(now);
+  alarm.setHours(ah,am,0,0);
+  if(alarm<=now) alarm.setDate(alarm.getDate()+1);
+  const diff = alarm - now;
+  return { h: Math.floor(diff/3600000), m: Math.floor((diff%3600000)/60000) };
+}
+
+/* ---- ALARM ---- */
+function refreshAlarm(){
+  document.getElementById('spinH').textContent = String(appH).padStart(2,'0');
+  document.getElementById('spinM').textContent = String(appM).padStart(2,'0');
+  document.getElementById('intentionInput').value = intentionVal;
+  document.getElementById('intentionCount').textContent = intentionVal.length;
+  updateToggleUI();
+  updateSleepCalc();
+}
+
+function updateToggleUI(){
+  const track = document.getElementById('alarmToggle');
+  const thumb = track.querySelector('.toggle-thumb');
+  track.style.background = alarmActive ? '#ff7b4f' : '#4a5568';
+  thumb.style.left = alarmActive ? '22px' : '3px';
+}
+
+function toggleAlarm(){
+  alarmActive = !alarmActive;
+  updateToggleUI();
+}
+
+function adjTime(field, delta){
+  if(field==='h'){
+    appH = (appH + delta + 24) % 24;
+    document.getElementById('spinH').textContent = String(appH).padStart(2,'0');
+  } else {
+    appM = ((appM + delta) % 60 + 60) % 60;
+    document.getElementById('spinM').textContent = String(appM).padStart(2,'0');
+  }
+  updateSleepCalc();
+}
+
+function updateSleepCalc(){
+  const t = `${String(appH).padStart(2,'0')}:${String(appM).padStart(2,'0')}`;
+  const sl = sleepDur(t);
+  document.getElementById('sleepCalc').textContent = `今から寝ると ${sl.h}時間${sl.m}分の睡眠`;
+}
+
+function saveAlarmData(){
+  const t = `${String(appH).padStart(2,'0')}:${String(appM).padStart(2,'0')}`;
+  intentionVal = document.getElementById('intentionInput').value;
+  store(KEYS.alarm, { time:t, intention:intentionVal, active:alarmActive });
+  showToast('✓ 保存しました');
+}
+
+function updateCharCount(el, countId, max){
+  document.getElementById(countId).textContent = el.value.length;
+}
+
+/* ---- RITUAL ---- */
+function refreshRitual(){
+  const list = document.getElementById('ritualList');
+  list.innerHTML = '';
+  ritualItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'ritual-item';
+    div.onclick = () => toggleRitual(item.id);
+    div.innerHTML = `
+      <div class="ritual-circle${item.checked?' done':''}">${item.checked?'✓':''}</div>
+      <span class="ritual-label${item.checked?' done':''}">${item.label}</span>
+    `;
+    list.appendChild(div);
+  });
+  updateRitualProgress();
+  // restore capsule
+  const cap = load(KEYS.capsule, null);
+  if(cap) document.getElementById('capsuleInput').value = cap.message || '';
+}
+
+function toggleRitual(id){
+  ritualItems = ritualItems.map(i => i.id===id ? {...i, checked:!i.checked} : i);
+  refreshRitual();
+}
+
+function updateRitualProgress(){
+  const done = ritualItems.filter(i=>i.checked).length;
+  document.getElementById('ritualCount').textContent = `${done}/5`;
+  document.getElementById('ritualProg').style.width = `${done*20}%`;
+}
+
+function saveRitual(){
+  store(KEYS.ritual, ritualItems);
+  const msg = document.getElementById('capsuleInput').value;
+  const today = new Date().toISOString().slice(0,10);
+  store(KEYS.capsule, { message:msg, createdAt:new Date().toISOString(), date:today });
+  // reset items
+  ritualItems = RITUAL_DEFAULTS.map(i=>({...i}));
+  store(KEYS.ritual, ritualItems);
+  showToast('タイムカプセルを送りました 🌙');
+  setTimeout(() => appNav('home'), 1600);
+}
+
+/* ---- WAKE UP ---- */
+function initWakeup(){
+  wakePhase = 1;
+  document.getElementById('wakePhase1').style.display = 'flex';
+  document.getElementById('wakePhase1').style.flexDirection = 'column';
+  document.getElementById('wakePhase1').style.alignItems = 'center';
+  document.getElementById('wakePhase2').style.display = 'none';
+  document.getElementById('wakePhase3').style.display = 'none';
+  document.getElementById('envelopeIcon').textContent = '✉️';
+  document.getElementById('envelopeIcon').style.transform = 'scale(1)';
+  document.getElementById('capsuleReveal').style.display = 'none';
+  document.getElementById('tapHint').style.display = 'block';
+  // save test stat
+  addStat({ challengeCompleted:false, ritualScore:0 });
+}
+
+function openEnvelope(){
+  const cap = load(KEYS.capsule, null);
+  const alarm = load(KEYS.alarm, {});
+  document.getElementById('envelopeIcon').textContent = '🌅';
+  document.getElementById('envelopeIcon').style.transform = 'scale(1.1)';
+  document.getElementById('tapHint').style.display = 'none';
+  document.getElementById('capsuleMsg').textContent = (cap && cap.message) ? cap.message : '（メッセージはありません）';
+  document.getElementById('intentionReveal').textContent = alarm.intention ? `「${alarm.intention}」` : '';
+  document.getElementById('capsuleReveal').style.display = 'block';
+}
+
+const DIRS = ['↑','↓','←','→'];
+function startChallenge(){
+  document.getElementById('wakePhase1').style.display = 'none';
+  document.getElementById('wakePhase2').style.display = 'block';
+  challenges = Array.from({length:4}, () => DIRS[Math.floor(Math.random()*4)]);
+  challengeIdx = 0;
+  showChallenge();
+}
+
+function showChallenge(){
+  document.getElementById('challengeProgress').textContent = `${challengeIdx+1} / 4`;
+  document.getElementById('challengeDir').textContent = challenges[challengeIdx];
+  const zone = document.getElementById('swipeZone');
+  zone.className = 'swipe-zone';
+  document.getElementById('swipeHint').textContent = 'スワイプ';
+}
+
+function swipeStart(e){
+  swipeStartX = e.clientX;
+  swipeStartY = e.clientY;
+}
+
+function swipeEnd(e){
+  const dx = e.clientX - swipeStartX;
+  const dy = e.clientY - swipeStartY;
+  let dir;
+  if(Math.abs(dx) > Math.abs(dy)){
+    dir = dx > 20 ? '→' : dx < -20 ? '←' : null;
+  } else {
+    dir = dy > 20 ? '↓' : dy < -20 ? '↑' : null;
+  }
+  if(!dir) return;
+  const zone = document.getElementById('swipeZone');
+  if(dir === challenges[challengeIdx]){
+    zone.classList.add('correct');
+    document.getElementById('swipeHint').textContent = '✓';
+    setTimeout(() => {
+      challengeIdx++;
+      if(challengeIdx >= challenges.length){
+        addStat({ challengeCompleted:true, ritualScore: ritualItems.filter(i=>i.checked).length });
+        document.getElementById('wakePhase2').style.display = 'none';
+        document.getElementById('wakePhase3').style.display = 'flex';
+        document.getElementById('wakePhase3').style.flexDirection = 'column';
+        document.getElementById('wakePhase3').style.alignItems = 'center';
+      } else {
+        showChallenge();
+      }
+    }, 400);
+  } else {
+    zone.classList.add('wrong');
+    document.getElementById('swipeHint').textContent = 'もう一度！';
+    setTimeout(() => { zone.className='swipe-zone'; document.getElementById('swipeHint').textContent='スワイプ'; }, 600);
+  }
+}
+
+/* ---- STATS ---- */
+function getStats(){ return load(KEYS.stats, []); }
+
+function addStat(data){
+  const today = new Date().toISOString().slice(0,10);
+  const stats = getStats().filter(s=>s.date!==today);
+  stats.push({ date:today, ...data });
+  store(KEYS.stats, stats);
+}
+
+function getStreak(stats){
+  if(!stats.length) return 0;
+  const sorted = [...stats].sort((a,b)=>b.date.localeCompare(a.date));
+  let streak=0, check=new Date();
+  check.setHours(0,0,0,0);
+  for(const s of sorted){
+    const d = new Date(s.date+'T00:00:00');
+    const diff = Math.round((check-d)/86400000);
+    if((diff===0||diff===1) && s.challengeCompleted){ streak++; check=d; }
+    else break;
+  }
+  return streak;
+}
+
+function last7(){
+  return Array.from({length:7},(_,i)=>{
+    const d=new Date(); d.setDate(d.getDate()-(6-i));
+    return d.toISOString().slice(0,10);
+  });
+}
+
+const DAYS=['日','月','火','水','木','金','土'];
+function dayLabel(ds){ return DAYS[new Date(ds+'T00:00:00').getDay()]; }
+
+function refreshStats(){
+  const stats = getStats();
+  const map = Object.fromEntries(stats.map(s=>[s.date,s]));
+  document.getElementById('streakNum').textContent = getStreak(stats);
+  const completed = stats.filter(s=>s.challengeCompleted).length;
+  const rate = stats.length ? Math.round(completed/stats.length*100) : 0;
+  const avg = stats.length ? (stats.reduce((s,x)=>s+(x.ritualScore||0),0)/stats.length).toFixed(1) : '0.0';
+  document.getElementById('avgRitual').textContent = avg;
+  document.getElementById('challengeRate').textContent = rate+'%';
+  document.getElementById('totalDays').textContent = stats.length;
+  document.getElementById('statsEmpty').style.display = stats.length ? 'none' : 'block';
+  // bar chart
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = '';
+  last7().forEach(date => {
+    const entry = map[date];
+    const score = entry?.ritualScore || 0;
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    fill.style.height = `${Math.max(4, score/5*100)}%`;
+    fill.style.background = entry?.challengeCompleted ? '#ff7b4f' : '#1e2a4a';
+    const lbl = document.createElement('div');
+    lbl.className = 'bar-day';
+    lbl.textContent = dayLabel(date);
+    col.appendChild(fill);
+    col.appendChild(lbl);
+    chart.appendChild(col);
+  });
+}
+
+/* ---- Toast ---- */
+function showToast(msg){
+  const existing = document.querySelector('.app-toast');
+  if(existing) existing.remove();
+  const t = document.createElement('div');
+  t.className = 'app-toast';
+  t.textContent = msg;
+  document.getElementById('appInner').appendChild(t);
+  setTimeout(()=>t.remove(), 2000);
+}
+
+/* ---- Init alarm spinners ---- */
+document.getElementById('spinH').textContent = String(appH).padStart(2,'0');
+document.getElementById('spinM').textContent = String(appM).padStart(2,'0');
+updateSleepCalc();
+</script>
+</body>
+</html>

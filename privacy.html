@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー — DAWN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:  #0a0e1a;
+    --navy2: #1a2040;
+    --coral: #ff7b4f;
+    --amber: #ffb347;
+    --text:  #e8eaf6;
+    --muted: #8892b0;
+    --line:  rgba(255,255,255,0.07);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 1rem 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+  }
+  .nav-sep { color: var(--line); }
+  .nav-page { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* ── Header ── */
+  .doc-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .doc-meta { font-size: 0.8rem; color: var(--muted); }
+  .doc-meta span { margin-right: 1.5rem; }
+
+  /* ── Trust badge ── */
+  .trust-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    color: #4ade80;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 2.5rem; }
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  h2 .num {
+    font-size: 0.7rem;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  p { margin-bottom: 0.75rem; color: var(--text); }
+  ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+  li { margin-bottom: 0.35rem; color: var(--text); }
+
+  /* ── Highlight box ── */
+  .highlight {
+    background: rgba(255,123,79,0.06);
+    border-left: 3px solid var(--coral);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .highlight strong { color: var(--amber); }
+
+  /* ── Data table ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+    margin: 1rem 0;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 0.6rem 1rem;
+    color: var(--amber);
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,179,71,0.2);
+    background: rgba(255,179,71,0.04);
+  }
+  .data-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .badge-local {
+    display: inline-block;
+    background: rgba(74,222,128,0.12);
+    color: #4ade80;
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 4px;
+    font-size: 0.68rem;
+    padding: 0.1rem 0.4rem;
+    white-space: nowrap;
+  }
+  .badge-none {
+    display: inline-block;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-size: 0.68rem;
+    padding: 0.1rem 0.4rem;
+    white-space: nowrap;
+  }
+
+  /* ── Contact block ── */
+  .contact-block {
+    background: var(--navy2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  .contact-block a { color: var(--amber); text-decoration: none; }
+  .contact-block a:hover { text-decoration: underline; }
+
+  /* ── Divider ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Lang toggle ── */
+  .lang-toggle {
+    display: flex; gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .lang-btn {
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: none;
+    color: var(--muted);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    background: rgba(255,123,79,0.15);
+    border-color: rgba(255,123,79,0.4);
+    color: var(--coral);
+  }
+
+  .lang-en { display: none; }
+  body.en .lang-ja { display: none; }
+  body.en .lang-en { display: block; }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .doc-footer a { color: var(--amber); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .container { padding: 2.5rem 1.2rem 4rem; }
+    .data-table { font-size: 0.75rem; }
+    .data-table th, .data-table td { padding: 0.5rem 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">DAWN</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-page">プライバシーポリシー</span>
+</nav>
+
+<div class="container">
+
+  <!-- Lang toggle -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('ja')">日本語</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+  </div>
+
+  <!-- ══ JAPANESE ══ -->
+  <div class="lang-ja">
+
+    <div class="doc-header">
+      <div class="doc-title">プライバシーポリシー</div>
+      <div class="doc-meta">
+        <span>制定日：2026年1月1日</span>
+        <span>最終更新：2026年6月2日</span>
+      </div>
+    </div>
+
+    <div class="trust-badge">
+      ✓ DAWNはお客様の個人データを外部サーバーに送信しません。すべてのデータはデバイス内に保存されます。
+    </div>
+
+    <div class="section">
+      <h2><span class="num">01</span> はじめに</h2>
+      <p>DAWN（以下「本アプリ」）は、アラームと就寝前リチュアルを通じてより豊かな朝を実現するためのアプリケーションです。</p>
+      <p>本プライバシーポリシーは、本アプリの利用に際してお客様の情報がどのように取り扱われるかを説明するものです。本アプリをご利用いただくことで、本ポリシーに同意いただいたものとみなします。</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">02</span> 収集する情報</h2>
+      <p>本アプリが取り扱うデータは以下のとおりです。</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>データの種類</th>
+            <th>内容</th>
+            <th>保存場所</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>アラーム設定</td>
+            <td>起床時刻・繰り返し設定</td>
+            <td><span class="badge-local">端末内のみ</span></td>
+          </tr>
+          <tr>
+            <td>意図・タイムカプセル</td>
+            <td>就寝前に入力したテキストメッセージ</td>
+            <td><span class="badge-local">端末内のみ</span></td>
+          </tr>
+          <tr>
+            <td>就寝前チェックリスト</td>
+            <td>各項目のオン/オフ状態</td>
+            <td><span class="badge-local">端末内のみ</span></td>
+          </tr>
+          <tr>
+            <td>起床履歴</td>
+            <td>アラーム解除時刻・スヌーズ回数</td>
+            <td><span class="badge-local">端末内のみ</span></td>
+          </tr>
+          <tr>
+            <td>広告識別子・Cookie</td>
+            <td>収集しません</td>
+            <td><span class="badge-none">該当なし</span></td>
+          </tr>
+          <tr>
+            <td>位置情報</td>
+            <td>収集しません</td>
+            <td><span class="badge-none">該当なし</span></td>
+          </tr>
+          <tr>
+            <td>連絡先・カメラ・マイク</td>
+            <td>収集しません</td>
+            <td><span class="badge-none">該当なし</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>重要：</strong>上記のデータはすべてお客様のデバイス内にのみ保存されます。開発者を含む第三者がアクセスすることは一切できません。
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">03</span> 情報の利用目的</h2>
+      <p>収集したデータは以下の目的のみに使用します。</p>
+      <ul>
+        <li>アラームの設定・通知機能の提供</li>
+        <li>タイムカプセルの保存と起床時の表示</li>
+        <li>就寝前チェックリストの状態管理</li>
+        <li>モーニングスコアなどの統計表示（すべて端末内で計算）</li>
+      </ul>
+      <p>マーケティング・広告・プロファイリング・第三者への販売等の目的には一切使用しません。</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">04</span> 第三者への提供</h2>
+      <p>本アプリはお客様のデータを第三者に提供・販売・共有しません。</p>
+      <p>本アプリには広告SDK・アナリティクスSDK・クラッシュレポートツール等の第三者サービスは組み込まれていません。</p>
+
+      <div class="highlight">
+        本アプリはインターネット接続を必要とせず、すべての機能がオフラインで動作します（天気情報表示を除く）。
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">05</span> データの保存と削除</h2>
+      <p>すべてのデータはお客様のデバイス内のアプリストレージ（iOS: UserDefaults/Documents、Android: SharedPreferences/内部ストレージ）に保存されます。</p>
+      <p>データを削除するには以下のいずれかの方法をお使いください。</p>
+      <ul>
+        <li>アプリ内の「設定 → データをリセット」から全データを削除</li>
+        <li>デバイスからアプリをアンインストール（すべてのデータが完全に削除されます）</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">06</span> 子どものプライバシー</h2>
+      <p>本アプリは13歳未満の方を対象としていません。13歳未満の方のデータを意図的に収集することはありません。</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">07</span> セキュリティ</h2>
+      <p>データはデバイス内のセキュアなストレージに保存されます。デバイスのロック機能（Face ID・Touch ID・PINなど）を設定されることをお勧めします。</p>
+      <p>ただし、デバイス自体への不正アクセスが発生した場合の保護は、デバイスのセキュリティ設定に依存します。</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">08</span> 本ポリシーの変更</h2>
+      <p>本ポリシーを変更する場合は、アプリのアップデートおよびこのページ上の「最終更新日」を変更することでお知らせします。重要な変更がある場合は、アプリ内通知でもお知らせします。</p>
+      <p>変更後も本アプリをご利用いただいた場合、変更後のポリシーに同意いただいたものとみなします。</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">09</span> お問い合わせ</h2>
+      <p>本ポリシーに関するご質問・ご意見は以下よりお問い合わせください。</p>
+      <div class="contact-block">
+        <p><strong>DAWN 開発者</strong></p>
+        <p>メール：<a href="mailto:support@dawn-app.example.com">support@dawn-app.example.com</a></p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">※ メールアドレスはリリース前に実際のものに差し替えてください</p>
+      </div>
+    </div>
+
+  </div><!-- /lang-ja -->
+
+  <!-- ══ ENGLISH ══ -->
+  <div class="lang-en">
+
+    <div class="doc-header">
+      <div class="doc-title">Privacy Policy</div>
+      <div class="doc-meta">
+        <span>Effective: January 1, 2026</span>
+        <span>Last updated: June 2, 2026</span>
+      </div>
+    </div>
+
+    <div class="trust-badge">
+      ✓ DAWN does not transmit your personal data to any external server. All data stays on your device.
+    </div>
+
+    <div class="section">
+      <h2><span class="num">01</span> Introduction</h2>
+      <p>DAWN ("the App") helps you create more meaningful mornings through alarms and a pre-sleep ritual. This Privacy Policy explains how your information is handled when you use the App. By using DAWN, you agree to this policy.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">02</span> Information We Handle</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Data type</th><th>Details</th><th>Storage</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Alarm settings</td><td>Wake time and repeat rules</td><td><span class="badge-local">On-device only</span></td></tr>
+          <tr><td>Intention / Time Capsule</td><td>Text messages you write before sleep</td><td><span class="badge-local">On-device only</span></td></tr>
+          <tr><td>Bedtime checklist</td><td>Checked/unchecked state of each item</td><td><span class="badge-local">On-device only</span></td></tr>
+          <tr><td>Wake history</td><td>Dismissal times, snooze counts</td><td><span class="badge-local">On-device only</span></td></tr>
+          <tr><td>Ad identifiers / Cookies</td><td>Not collected</td><td><span class="badge-none">N/A</span></td></tr>
+          <tr><td>Location</td><td>Not collected</td><td><span class="badge-none">N/A</span></td></tr>
+          <tr><td>Contacts / Camera / Mic</td><td>Not collected</td><td><span class="badge-none">N/A</span></td></tr>
+        </tbody>
+      </table>
+      <div class="highlight">
+        <strong>Important:</strong> All data listed above is stored solely on your device. Neither the developer nor any third party can access it.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">03</span> How We Use Information</h2>
+      <p>Data is used exclusively to:</p>
+      <ul>
+        <li>Deliver alarms and notifications</li>
+        <li>Store and display your Time Capsule at wake time</li>
+        <li>Persist your checklist state</li>
+        <li>Calculate Morning Score statistics (computed on-device)</li>
+      </ul>
+      <p>We do not use data for marketing, advertising, profiling, or sale to third parties.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">04</span> Third-Party Sharing</h2>
+      <p>We do not share, sell, or disclose your data to any third party. The App contains no advertising SDKs, analytics SDKs, or crash-reporting tools.</p>
+      <div class="highlight">DAWN works fully offline. No internet connection is required for core functionality.</div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">05</span> Data Retention and Deletion</h2>
+      <p>All data is stored in your device's app storage. To delete your data:</p>
+      <ul>
+        <li>Use <strong>Settings → Reset all data</strong> within the App</li>
+        <li>Uninstall the App (all data is permanently deleted)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">06</span> Children's Privacy</h2>
+      <p>DAWN is not directed at children under 13. We do not knowingly collect data from children under 13.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">07</span> Security</h2>
+      <p>Data is stored in your device's secure app sandbox. We recommend enabling device-level security (Face ID, Touch ID, PIN). Protection against unauthorized physical device access depends on your device settings.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">08</span> Changes to This Policy</h2>
+      <p>If we update this policy, we will update the "Last updated" date on this page and may notify you in-app for significant changes. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">09</span> Contact</h2>
+      <div class="contact-block">
+        <p><strong>DAWN Developer</strong></p>
+        <p>Email: <a href="mailto:support@dawn-app.example.com">support@dawn-app.example.com</a></p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">※ Replace with your real address before launch</p>
+      </div>
+    </div>
+
+  </div><!-- /lang-en -->
+
+  <div class="doc-footer">
+    <p><a href="index.html">← DAWNトップページへ</a></p>
+    <br>
+    <p>© 2026 DAWN. All rights reserved.</p>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('en', lang === 'en');
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === (lang === 'ja' ? '日本語' : 'English'));
+    });
+  }
+</script>
+
+</body>
+</html>
