@@ -7,6 +7,12 @@
 <meta name="description" content="DAWNは、夜の自分が朝の自分に送る約束。ホライゾンインターフェース、ランダム起床チャレンジ、タイムカプセルで、明日の朝を変える無料アラームアプリ。">
 <link rel="icon" type="image/svg+xml" href="assets/icon-primary.svg">
 <link rel="apple-touch-icon" href="assets/icon-primary.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DAWN">
 <meta property="og:title" content="DAWN — 夜の約束を、朝の力に。">
 <meta property="og:description" content="夜の自分が朝の自分に送る約束。タイムカプセル＋起床チャレンジで、明日の朝を変える。">
 <meta property="og:image" content="assets/feature-graphic.svg">
@@ -1450,6 +1456,20 @@ function showToast(msg){
 document.getElementById('spinH').textContent = String(appH).padStart(2,'0');
 document.getElementById('spinM').textContent = String(appM).padStart(2,'0');
 updateSleepCalc();
+
+/* ---- PWA: register service worker ---- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
+/* ---- When launched as an installed app, open the demo straight away ---- */
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+  || window.navigator.standalone === true;
+if (isStandalone) {
+  window.addEventListener('load', () => { try { openApp(); } catch(e){} });
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+{
+  "name": "DAWN — 夜の自分が朝の自分に送る約束",
+  "short_name": "DAWN",
+  "description": "夜の自分が朝の自分に送る約束。タイムカプセルと起床チャレンジで、明日の朝を変えるアラーム体験。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "categories": ["lifestyle", "health", "productivity"],
+  "icons": [
+    {
+      "src": "assets/icon-primary.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-primary.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
